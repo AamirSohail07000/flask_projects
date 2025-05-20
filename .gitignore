@@ -1,0 +1,29 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+env/
+
+# Environment variables and config
+.env
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Log files
+*.log
+
+# Database
+*.sqlite3
+
+# Other
+*.bak
+*.swp
