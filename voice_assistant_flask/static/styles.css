@@ -1,0 +1,165 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: hsl(0, 0%, 100%);
+  margin:0;
+  padding-top: 10px;
+}
+
+.container {
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+#voice_assistant {
+  color: #333;
+  text-align: center;
+  font-size: 100px;   
+}
+#search_history.admin_page{
+  color: #333;
+  text-align: center;
+  font-size: 50px; 
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 80%;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4cae4c;
+}
+
+/*  styling mic button*/
+.mic-button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 35px;
+  text-align: center;
+  font-size: 85px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mic-button:active {
+  background-color: #45a049;
+}
+
+#command-display {
+  margin-top: 40px;
+  font-size: 45px;
+  font-family: Arial, sans-serif;
+}
+
+/* table style */
+
+table {
+  margin-top: 5px;
+  width: 100%;
+  border-collapse:collapse;
+  border: 1px solid #ddd; /* Add border to the table */
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd; /* Add border to table cells */
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Admin page css */
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+user agent stylesheet
+form {
+    display: block;
+    margin-top: 0em;
+    unicode-bidi: isolate;
+}
+.bg-body-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
+}
+body {
+    margin: 0;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: var(--bs-body-color);
+    text-align: var(--bs-body-text-align);
+    background-color: var(--bs-body-bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+/* commands page styling */
+.commands-h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+#input-commands {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+}
+
+li {
+  padding: 10px 0; /* Add spacing between items */
+  border-bottom: 1px solid #ddd; /* Add a line between items */
+}
+
+li:last-child {
+  border-bottom: none; /* Remove the bottom border from the last item */
+}
+
+strong {
+  color: #5cb85c; /* Highlight command name */
+}
+
+em {
+  color: #555; /* Color for command examples */
+}

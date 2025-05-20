@@ -1,0 +1,50 @@
+{%extends "base.html" %}
+{% block title%} Home Page {% endblock %}
+{% block content%} 
+    
+    <h1 id="voice_assistant">Voice Assistant</h1>
+    <button class="mic-button" onclick="startRecording()">🎤</button>
+    <p id="command-display">Click the mic to speak your command</p>
+
+    <script>
+        function startRecording() {
+            // Check if the browser supports SpeechRecognition
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            
+            // Set recognition parameters
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            // Start recognition
+            recognition.start();
+
+            // Handle result
+            recognition.onresult = function(event) {
+                const command = event.results[0][0].transcript;
+                document.getElementById('command-display').textContent = "You said: " + command;
+                
+                // Send the command to the Flask backend
+                fetch('/process_voice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ command: command })
+                }).then(response => response.json())
+                  .then(data => {
+                      console.log("Command processed:", data);
+                  }).catch(error => console.error("Error:", error));
+            };
+
+            // Handle errors
+            recognition.onerror = function(event) {
+                console.error(event.error);
+                alert("Error occurred during voice recognition: " + event.error);
+            };
+        }
+    </script>
+    <div>
+        <p class="mt-5 mb-3 text-body-secondary">© Aamir Sohail</p>
+    </div>
+{% endblock %}

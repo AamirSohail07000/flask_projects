@@ -1,0 +1,31 @@
+
+{%extends "base.html" %}
+{% block title%}Search History {% endblock %}
+{% block content%} 
+<h1 id="search_history">Search History Table</h1>
+    <form action="/clear_history" method="post">
+        <button type="submit" class="btn btn-danger" href="">Clear History</button>
+    </form>
+    <table border="1">
+
+      
+        <thead>
+            <tr>
+                <th>History</th>
+                <th>Search Command</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in search_data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <p class="mt-5 mb-3 text-body-secondary">© Aamir Sohail</p>
+    </div>
+{% endblock %}
