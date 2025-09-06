@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyc
+*.pyd
 
 # Virtual environment
 venv/
@@ -27,4 +29,4 @@ Thumbs.db
 # Other
 *.bak
 *.swp
-*.pyc
+
