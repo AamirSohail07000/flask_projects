@@ -23,18 +23,18 @@ def connect_to_db():
         print(f"Error connecting to MySQL DB: {e}")
         return None
 
-def store_command_in_db(command):
+def store_command_in_db(command, status):
     connection = connect_to_db()
     if connection is None:
         print("Failed to connect to database.")
         return
 
     cursor = connection.cursor()
-    sql = "INSERT INTO users (command) VALUES (%s)"
+    sql = "INSERT INTO users (command, status) VALUES (%s, %s)"
     try:
-        cursor.execute(sql, (command,))
+        cursor.execute(sql, (command, status))
         connection.commit()
-        print("Command stored successfully.")
+        print("Command stored successfully with status.")
     except Error as e:
         print(f"Error inserting data: {e}")
     finally:
@@ -42,5 +42,20 @@ def store_command_in_db(command):
         connection.close()
 
 def processCommand(command):
-    store_command_in_db(command)  # Store command in database
-    # Additional command processing logic...
+    try:
+        # Command execution logic
+        executed_successfully = True #Change to false if execution fails
+
+        if executed_successfully:
+            status = "Executed"
+        else:
+            status = "Failed"
+        # Store command in database
+        store_command_in_db(command)
+
+    except Exception as e:
+        # If error, mark as failed
+        store_command_in_db(command, "Failed")
+        print(f"Error processing command: {e}")   
+        
+        
