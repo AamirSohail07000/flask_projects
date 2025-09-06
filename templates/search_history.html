@@ -1,31 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Search History{% endblock %}
 
-{%extends "base.html" %}
-{% block title%}Search History {% endblock %}
-{% block content%} 
+{% block content %}
 <h1 id="search_history">Search History Table</h1>
-    <form action="/clear_history" method="post">
-        <button type="submit" class="btn btn-danger" href="">Clear History</button>
-    </form>
-    <table border="1">
 
-      
-        <thead>
-            <tr>
-                <th>History</th>
-                <th>Search Command</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in search_data %}
-            <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div>
-        <p class="mt-5 mb-3 text-body-secondary">© Aamir Sohail</p>
-    </div>
+<div class="text-center mb-3">
+    <form method="POST" action="/clear_history">
+        <button type="submit" class="btn btn-danger">Clear History</button>
+    </form>
+</div>
+
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th>History</th>
+            <th>Search Command</th>
+            <th>
+                Status
+                <!-- Dynamic Dropdown -->
+                <select id="statusFilter" class="form-select form-select-sm mt-1">
+                    <option value="">All</option>
+                    {% for status in statuses %}
+                        <option value="{{ status }}">{{ status }}</option>
+                    {% endfor %}
+                </select>
+            </th>
+        </tr>
+    </thead>
+    <tbody id="historyTable">
+        {% for row in search_data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div>
+    <p class="mt-5 mb-3 text-body-secondary">© Aamir Sohail</p>
+</div>
+
+<!-- JavaScript for Status Filtering -->
+<script>
+    document.getElementById("statusFilter").addEventListener("change", function () {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#historyTable tr");
+
+        rows.forEach(row => {
+            let status = row.cells[2].textContent.toLowerCase();
+            if (filter === "" || status === filter) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+</script>
 {% endblock %}
