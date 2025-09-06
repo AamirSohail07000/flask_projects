@@ -38,11 +38,17 @@ def search_history():
 
     try:
         # query to fetch the search history
-        cursor.execute("SELECT created_at, command FROM users ORDER BY created_at DESC")
+        cursor.execute("SELECT created_at, command, status FROM users ORDER BY created_at DESC")
         search_data = cursor.fetchall() # get all records
 
+            # Fetch distinct statuses for dropdown
+        cursor.execute("SELECT DISTINCT status FROM users")
+        statuses = [row[0] for row in cursor.fetchall()]
+        cursor.close()
+        connection.close()
+
         # pass data to the template
-        return render_template('search_history.html', search_data=search_data)
+        return render_template('search_history.html', search_data=search_data, statuses=statuses)
 
     except Exception as e:
         print(f"Error fetching data: {e}")
@@ -89,40 +95,58 @@ def process_voice():
 
 def processCommand(command):
     # Store the command in the database
-    store_command_in_db(command)
+    status = "Failed"  # Default in case command not recognized
+    try:
+        
 
-    if "open google" in command.lower():
-        speak("Sure! I am openning google for you")
-        webbrowser.open("https://www.google.co.in/") 
-    elif "open email" in command.lower():
-        speak("Sure! I am openning your emails for you")
-        webbrowser.open("https://mail.google.com/mail/u/0/#inbox")   
-    elif "open facebook" in command.lower():
-        speak("Sure! I am openning facebook for you")
-        webbrowser.open("https://facebook.com")
-    elif "open youtube" in command.lower():
-        speak("Sure! I am openning youtube for you")
-        webbrowser.open("https://youtube.com")
-    elif "open linkedin" in command.lower():
-        speak("Sure! I am openning linkedin for you")
-        webbrowser.open("https://linkedin.com")
-    elif "open github" in command.lower():
-        speak("Sure! I am openning Github for you")
-        webbrowser.open("https://github.com/")
-    elif "initiate coding" in command.lower():
-        speak("InitiatedCoding mode. Let’s build something awesome!")
-        subprocess.run([r'C:\Users\sohai\AppData\Local\Programs\Microsoft VS Code\Code.exe'], check=True)
-        webbrowser.open("https://docs.python.org/3.12/")
-        webbrowser.open("https://youtube.com")
-        webbrowser.open("https://github.com/AamirSohail07000")
-        webbrowser.open("https://google.com")
-        webbrowser.open("https://www.w3schools.com/python/default.asp")
-        webbrowser.open("https://linkedin.com")
-    elif "how are you" in command.lower():
-        speak("Hey,I'm doing great!,How can I help ?")       
-    else:
-        speak("Sorry, I did not understand the command.")
+        if "open google" in command.lower():
+            speak("Sure! I am openning google for you")
+            webbrowser.open("https://www.google.co.in/")
+            status = "Executed" 
+        elif "open email" in command.lower():
+            speak("Sure! I am openning your emails for you")
+            webbrowser.open("https://mail.google.com/mail/u/0/#inbox")
+            status = "Executed"   
+        elif "open facebook" in command.lower():
+            speak("Sure! I am openning facebook for you")
+            webbrowser.open("https://facebook.com")
+            status = "Executed"
+        elif "open youtube" in command.lower():
+            speak("Sure! I am openning youtube for you")
+            webbrowser.open("https://youtube.com")
+            status = "Executed"
+        elif "open linkedin" in command.lower():
+            speak("Sure! I am openning linkedin for you")
+            webbrowser.open("https://linkedin.com")
+            status = "Executed"
+        elif "open github" in command.lower():
+            speak("Sure! I am openning Github for you")
+            webbrowser.open("https://github.com/")
+            status = "Executed"
+        elif "initiate coding" in command.lower():
+            speak("InitiatedCoding mode. Let’s build something awesome!")
+            subprocess.run([r'C:\Users\sohai\AppData\Local\Programs\Microsoft VS Code\Code.exe'], check=True)
+            webbrowser.open("https://docs.python.org/3.12/")
+            webbrowser.open("https://youtube.com")
+            webbrowser.open("https://github.com/AamirSohail07000")
+            webbrowser.open("https://google.com")
+            webbrowser.open("https://www.w3schools.com/python/default.asp")
+            webbrowser.open("https://linkedin.com")
+            status = "Executed"
+        elif "how are you" in command.lower():
+            speak("Hey,I'm doing great!,How can I help ?")
+            status = "Executed"       
+        else:
+            speak("Sorry, I did not understand the command.")
+            status = "Failed"
 
+    except Exception as e:
+        speak("There was an error while executing your command.")
+        print(f"Error: {e}")
+        status = "Failed"
+
+    # Store command & status in db
+    store_command_in_db(command, status)
 
 
 if __name__ == '__main__':
